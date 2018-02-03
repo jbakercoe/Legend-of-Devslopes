@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour {
-
-    public static GameManager instance = null;
-
+public class GameManager : Singleton<GameManager> {
+    
     [SerializeField] GameObject player;
     [SerializeField] GameObject tanker;
     [SerializeField] GameObject soldier;
@@ -55,18 +53,7 @@ public class GameManager : MonoBehaviour {
     {
         get { return arrow; }
     }
-
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-        } else if (instance != this){
-            Destroy(gameObject);
-        }
-
-    }
-
+    
     // Use this for initialization
     void Start () {
         heroSpawn();
