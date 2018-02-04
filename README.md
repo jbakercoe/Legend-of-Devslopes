@@ -10,3 +10,7 @@ Features include:
 - Pause menu
 - Start menu
 - Health powerups
+
+Bugs: 
+- Tanker hurt animations not playing
+- Tanker attacks don't register
