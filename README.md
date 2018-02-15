@@ -1,16 +1,3 @@
 # Legend-of-Devslopes
-A 3d fantasy melee game made from following Devslopes course on Unity Game Development
+A 3d fantasy melee game made from following Devslopes course on Unity Game Development, with some features I added myself.
 
-Features include:
-- Navmesh agents
-- Raycasts
-- Enemy pathfinding
-- Enemy spawning 
-- Minimap
-- Pause menu
-- Start menu
-- Health powerups
-
-Bugs: 
-- Tanker hurt animations not playing
-- Tanker attacks don't register
