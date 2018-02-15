@@ -36,6 +36,7 @@ public class MenuManager : MonoBehaviour {
         soldierAnim = soldier.GetComponent<Animator>();
         blackAnim = black.GetComponent<Animator>();
         StartCoroutine(showcase());
+        AudioManager.Instance.Play("Theme");
     }
 	
 	// Update is called once per frame
@@ -52,7 +53,7 @@ public class MenuManager : MonoBehaviour {
 
     public void Quit()
     {
-        Debug.Log("quit click");
+        Debug.Log("Quitting");
         Application.Quit();
     }
 

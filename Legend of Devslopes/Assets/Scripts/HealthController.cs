@@ -7,28 +7,19 @@ public class HealthController : MonoBehaviour {
     [SerializeField] int hp;
     private GameObject player;
     private PlayerHealth playerHealth;
-    private AudioSource audioSrc;
 
 	// Use this for initialization
 	void Start () {
-        player = GameManager.instance.Player;
+        player = GameManager.Instance.Player;
         playerHealth = player.GetComponent<PlayerHealth>();
-        audioSrc = GetComponent<AudioSource>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other == player.GetComponent<CharacterController>())
         {
-            playerHealth.giveHealth(hp);
-            audioSrc.PlayOneShot(audioSrc.clip);
+            playerHealth.giveHealth(hp);            
             Destroy(gameObject);
-            //GameManager.instance.spawnPowerUp();
         }
     }
 }

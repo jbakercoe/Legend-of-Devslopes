@@ -18,9 +18,10 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] GameObject healthPowerUp;
     [SerializeField] Text levelText;
     [SerializeField] Text endText;
-    [SerializeField] Button menuButton;
+    [SerializeField] Button restartButton;
+    [SerializeField] Button quitButton;
 
-    private const int theNumberOfEnemiesYouHaveToKillToGetAPowerUp = 5;
+    private const int theNumberOfEnemiesYouHaveToKillToGetAPowerUp = 3;
     private const int maxLevel = 20;
 
     private Vector3 cameraOffset = new Vector3(0f, 3.5f, -6.1f);
@@ -30,7 +31,7 @@ public class GameManager : Singleton<GameManager> {
     private float timeBetweenSpawns = 1f;
     private float timeSinceLastSpawn;
     private bool gameOver = false;
-    private GameObject newEnemy;
+    //private GameObject newEnemy;
     private GameObject newPowerUp;
     //private Random rdm = new Random();
 
@@ -62,7 +63,8 @@ public class GameManager : Singleton<GameManager> {
         StartCoroutine(spawn());
         enemiesKilled = 0;
         endText.gameObject.SetActive(false);
-        menuButton.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
+        quitButton.gameObject.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -112,9 +114,10 @@ public class GameManager : Singleton<GameManager> {
                 timeSinceLastSpawn = 0;
                 GameObject spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
                 int rdmIndex = Random.Range(0, enemies.Length);
+                print("Spawn index: " + rdmIndex);
                 GameObject enemy = enemies[rdmIndex];
-                newEnemy = Instantiate(enemy);
-                newEnemy.transform.position = spawnPoint.transform.position;
+                //newEnemy = 
+                Instantiate(enemy, spawnPoint.transform.position, Quaternion.identity);
                 yield return new WaitForSeconds(.5f);
             } else if(killedEnemies.Count >= currentLevel)
             {
@@ -146,34 +149,39 @@ public class GameManager : Singleton<GameManager> {
     {
         // Pick a random spawn point
         GameObject spawnPoint = powerUpSpawnPoints[Random.Range(0, powerUpSpawnPoints.Length)];
-        newPowerUp = Instantiate(healthPowerUp);
+        //newPowerUp = Instantiate(healthPowerUp);
+        AudioManager.Instance.Play("Power Up");
         // spawn randomly around the chosen spawn point
-        float distX = Random.Range(-5.7f, 5.1f);
-        float distZ = Random.Range(-5.7f, 5.1f);
-        // add lift
-        float yBuffer = 0f;
-        newPowerUp.transform.position = spawnPoint.transform.position + new Vector3(distX, yBuffer, distZ);
-        //Debug.Log(newPowerUp.transform.position);
+        float distX = Random.Range(-4f, 4f);
+        float distZ = Random.Range(-4f, 4f);
+        Instantiate(healthPowerUp, spawnPoint.transform.position + new Vector3(distX, 0f, distZ), Quaternion.identity);
     }
 
     private void endGame()
     {
         gameOver = true;
         endText.gameObject.SetActive(true);
-        menuButton.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+        quitButton.gameObject.SetActive(true);
         // If player won
-        if(currentLevel > maxLevel)
+        if (currentLevel > maxLevel)
         {
             endText.text = "Victory!";
         } else
         {
-            endText.text = "Defeat";
+            endText.text = "Defeat!";
         }
     }
 
-    public void loadMenu()
+    public void Restart()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadSceneAsync("Gameplay");
+    }
+
+    public void QuitGame()
+    {
+        print("Quitting game...");
+        Application.Quit();
     }
 
 }

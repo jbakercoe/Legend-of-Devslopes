@@ -6,53 +6,46 @@ using UnityEngine.UI;
 public class InstructionManager : MonoBehaviour {
     
     [SerializeField] private Image instructionMenu;
-    [SerializeField] private GameObject walker;
-
-    private class menuSection
-    {
-
-
-
-        public menuSection()
-        {
-
-        }
-    }
-
+    [SerializeField] private Text buttonText;
+    
     private Object[] menuHeadings;
 
     private Animator anim;
-    private Animator walkerAnim;
+    private Animator textAnim;
+    private int instructionIndex = 0;
 
 	// Use this for initialization
 	void Start () {
         anim = instructionMenu.GetComponent<Animator>();
-        walkerAnim = walker.GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
     public void OpenInstructions()
     {
-        //instructionMenu.gameObject.SetActive(true);
-        anim.SetBool("isOpen", true);
-        walkerAnim.Play("Walk");
-        StartCoroutine(demoTurn());
+        instructionIndex = 0;
+        instructionMenu.transform.GetChild(1).gameObject.SetActive(false);
+        instructionMenu.transform.GetChild(0).gameObject.SetActive(true);
+        buttonText.text = "Next";
+        anim.SetTrigger("Open");
     }
 
-    private void initializeMenuHeadings()
+    public void CloseInstructions()
     {
-
+        anim.SetTrigger("Close");
     }
 
-    IEnumerator demoTurn()
+    public void SwitchInstructions()
     {
-        yield return new WaitForSeconds(1f);
-        walker.transform.Rotate(new Vector3(0f, 90f, 0f));
-        StartCoroutine(demoTurn());
+        if(instructionIndex == 0)
+        {
+            instructionMenu.transform.GetChild(instructionIndex).gameObject.SetActive(false);
+            instructionIndex++;
+            instructionMenu.transform.GetChild(instructionIndex).gameObject.SetActive(true);
+            buttonText.text = "Done";
+            
+        } else
+        {
+            CloseInstructions();
+        }
     }
 
 }

@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
     public static bool GameIsPaused = false;
 
     [SerializeField] GameObject MenuUI;
+    [SerializeField] GameObject confirmationMenu;
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,6 +29,7 @@ public class PauseMenu : MonoBehaviour {
         MenuUI.gameObject.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+        AudioManager.Instance.PauseVolume();
     }
 
     public void Resume()
@@ -35,12 +37,31 @@ public class PauseMenu : MonoBehaviour {
         MenuUI.gameObject.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
+        AudioManager.Instance.PauseVolume();
     }
 
-    public void LoadMenu()
+    public void Restart()
     {
+        SceneManager.LoadSceneAsync("Gameplay");
+        MenuUI.gameObject.SetActive(false);
         Time.timeScale = 1f;
-        EditorSceneManager.LoadSceneAsync("Menu");
+        GameIsPaused = false;
+    }
+
+    public void Quit()
+    {
+        confirmationMenu.gameObject.SetActive(true);
+    }
+
+    public void DontQuit()
+    {
+        confirmationMenu.gameObject.SetActive(false);
+    }
+
+    public void ConfirmedQuit()
+    {
+        print("Quitting game...");
+        Application.Quit();
     }
 
 }

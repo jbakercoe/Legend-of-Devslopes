@@ -18,13 +18,13 @@ public class EnemyMove : MonoBehaviour {
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         enemyHealth = GetComponent<EnemyHealth>();
-        player = GameManager.instance.Player.transform;
+        player = GameManager.Instance.Player.transform;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if(!GameManager.instance.GameOver && enemyHealth.IsAlive)
+        if(!GameManager.Instance.GameOver && enemyHealth.IsAlive)
         {
             nav.enabled = true;
             nav.SetDestination(player.position);
@@ -32,7 +32,7 @@ public class EnemyMove : MonoBehaviour {
         {
             nav.enabled = false;
         }
-        if(GameManager.instance.GameOver && enemyHealth.IsAlive)
+        if(GameManager.Instance.GameOver && enemyHealth.IsAlive)
         {
             anim.Play("Idle");
         }

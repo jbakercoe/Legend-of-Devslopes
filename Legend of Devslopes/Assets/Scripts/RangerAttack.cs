@@ -18,8 +18,8 @@ public class RangerAttack : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        arrow = GameManager.instance.Arrow;
-        player = GameManager.instance.Player;
+        arrow = GameManager.Instance.Arrow;
+        player = GameManager.Instance.Player;
         anim = GetComponent<Animator>();
         enemyHealth = GetComponent<EnemyHealth>();
         StartCoroutine(attack());
@@ -48,7 +48,7 @@ public class RangerAttack : MonoBehaviour
 
     IEnumerator attack()
     {
-        if (playerInRange && !GameManager.instance.GameOver)
+        if (playerInRange && !GameManager.Instance.GameOver)
         {
             anim.Play("Attack");
             yield return new WaitForSeconds(timeBetweenAttacks);

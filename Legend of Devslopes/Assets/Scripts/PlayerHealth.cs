@@ -9,25 +9,27 @@ public class PlayerHealth : MonoBehaviour {
     [SerializeField] int maxHealth = 100;
     [SerializeField] float timeSinceLastHit = 2f;
     [SerializeField] Slider healthSlider;
+    [SerializeField] GameObject red;
 
     private float timer = 0f;
     private CharacterController characterController;
-    private AudioSource audioSource;
     private Animator anim;
+    private Animator redAnim;
     private new ParticleSystem particleSystem;
     private int currentHealth;
 
     private void Awake()
     {
         Assert.IsNotNull(healthSlider);
+        Assert.IsNotNull(red);
     }
 
     // Use this for initialization
     void Start () {
 
         anim = GetComponent<Animator>();
+        redAnim = red.GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
-        audioSource = GetComponent<AudioSource>();
         currentHealth = maxHealth;
         particleSystem = GetComponentInChildren<ParticleSystem>();
 
@@ -40,9 +42,11 @@ public class PlayerHealth : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        //print("PlayerTriggerEnter: " + other.tag);
         // If collider is a weapon, if enough time has elapsed since last hit, and if !dead
-        if(other.tag == "Weapon" && timer >= timeSinceLastHit && !GameManager.instance.GameOver)
+        if(other.tag == "Weapon" && timer >= timeSinceLastHit && !GameManager.Instance.GameOver)
         {
+            //print("Taking hit");
             takeHit();
             timer = 0;
         }
@@ -54,16 +58,21 @@ public class PlayerHealth : MonoBehaviour {
         // could make it so it always does the hurt thing, then checks if dead for the dead thing
         currentHealth -= 10;
         healthSlider.value = currentHealth;
-        audioSource.PlayOneShot(audioSource.clip);
+        AudioManager.Instance.Play("Hero Hurt");
         if (currentHealth > 0)
         {
-            anim.Play("Hurt");
+            anim.SetTrigger("Hurt");
+            if (currentHealth <= 30)
+            {
+                redAnim.SetBool("hasLowHealth", true);
+            }
         } else // Hero is dead, game over
         {
-            anim.SetTrigger("HeroDie");
+            redAnim.enabled = false;
+            anim.SetTrigger("IsDead");
             characterController.enabled = false;
         }
-        GameManager.instance.playerHit(currentHealth);
+        GameManager.Instance.playerHit(currentHealth);
     }
 
     public void giveHealth(int health)
@@ -72,6 +81,8 @@ public class PlayerHealth : MonoBehaviour {
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
         healthSlider.value = currentHealth;
+        if (currentHealth > 30)
+            redAnim.SetBool("hasLowHealth", false);
     }
 
 }

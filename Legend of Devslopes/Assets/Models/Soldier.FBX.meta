@@ -3,7 +3,7 @@ guid: a9b044de44370f8408d7cbd3a92dc8ca
 timeCreated: 1504323412
 licenseType: Free
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Bip001
     100002: Bip001 Footsteps
@@ -120,10 +120,12 @@ ModelImporter:
     13700000: Chan
     13700002: Kiem
     13700004: Than
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -136,6 +138,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -287,14 +290,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.6356827
+      - time: 0.5860644
         functionName: BeginAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.7281862
+      - time: 0.7778045
         functionName: EndAttack
         data: 
         objectReferenceParameter: {instanceID: 0}

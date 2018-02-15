@@ -10,13 +10,12 @@ public class EnemyHealth : MonoBehaviour {
     [SerializeField] private float dissapearSpeed = 2f;
     [SerializeField] private int damagePerHit = 10;
     [SerializeField] private GameObject minimapIcon;
-
-    private AudioSource audioSource;
+    
     private NavMeshAgent navMeshAgent;
     private Rigidbody rigidBody;
     private CapsuleCollider capsuleCollider;
     private Animator anim;
-    private ParticleSystem particleSystem;
+    private new ParticleSystem particleSystem;
     private float timer;
     private bool isAlive;
     private bool isReadyToDissapear;
@@ -34,8 +33,7 @@ public class EnemyHealth : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GameManager.instance.RegisterEnemy(this);
-        audioSource = GetComponent<AudioSource>();
+        GameManager.Instance.RegisterEnemy(this);
         navMeshAgent = GetComponent<NavMeshAgent>();
         rigidBody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -45,7 +43,6 @@ public class EnemyHealth : MonoBehaviour {
         isAlive = true;
         isReadyToDissapear = false;
         currentHealth = maxHealth;
-        //minimapIcon = Get
 	}
 	
 	// Update is called once per frame
@@ -71,8 +68,8 @@ public class EnemyHealth : MonoBehaviour {
     private void takeHit()
     {
         particleSystem.Play();
+        AudioManager.Instance.Play("Enemy Hurt");
         currentHealth -= damagePerHit;
-        audioSource.PlayOneShot(audioSource.clip);
         if(currentHealth <= 0)
         {
             isAlive = false;
@@ -85,7 +82,12 @@ public class EnemyHealth : MonoBehaviour {
 
     private void killEnemy()
     {
-        GameManager.instance.KillEnemy(this);
+        EnemyAttack attackScript = gameObject.GetComponent<EnemyAttack>();
+        if(attackScript != null)
+        {
+            attackScript.EndAttack();
+        }
+        GameManager.Instance.KillEnemy(this);
         capsuleCollider.enabled = false;
         navMeshAgent.enabled = false;
         anim.SetTrigger("EnemyDie");

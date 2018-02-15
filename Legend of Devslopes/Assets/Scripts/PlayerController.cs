@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (!GameManager.instance.GameOver)
+        if (!GameManager.Instance.GameOver)
         {
             Vector3 moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             controller.SimpleMove(moveDirection * moveSpeed);
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
     private void FixedUpdate()
     {
 
-        if (!GameManager.instance.GameOver)
+        if (!GameManager.Instance.GameOver)
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

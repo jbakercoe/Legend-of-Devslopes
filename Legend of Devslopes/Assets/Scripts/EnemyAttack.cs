@@ -16,7 +16,7 @@ public class EnemyAttack : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         weaponColliders = GetComponentsInChildren<BoxCollider>();
-        player = GameManager.instance.Player;
+        player = GameManager.Instance.Player;
         anim = GetComponent<Animator>();
         enemyHealth = GetComponent<EnemyHealth>();
         StartCoroutine(attack());
@@ -42,7 +42,7 @@ public class EnemyAttack : MonoBehaviour {
 
     IEnumerator attack()
     {
-        if(playerInRange && !GameManager.instance.GameOver)
+        if(playerInRange && !GameManager.Instance.GameOver)
         {
             anim.Play("Attack");
             yield return new WaitForSeconds(timeBetweenAttacks);

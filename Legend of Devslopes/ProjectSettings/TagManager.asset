@@ -8,6 +8,7 @@ TagManager:
   - PlayerWeapon
   - Fire
   - MinimapIcon
+  - Button
   layers:
   - Default
   - TransparentFX

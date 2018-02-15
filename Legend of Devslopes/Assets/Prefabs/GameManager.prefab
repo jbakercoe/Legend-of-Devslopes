@@ -80,4 +80,4 @@ MonoBehaviour:
     type: 2}
   levelText: {fileID: 0}
   endText: {fileID: 0}
-  menuButton: {fileID: 0}
+  restartButton: {fileID: 0}
